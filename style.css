@@ -1,0 +1,59 @@
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(
+        rgb(21, 25, 52),
+        #0b0e1d,
+        black
+    );
+
+    display: flex;
+    justify-content: center;
+}
+
+
+#page-title {
+    position: absolute;
+    color: white;
+    font-family: "Fira", monospace;
+
+    margin-top: 1vh;
+    text-align: center;
+}
+
+
+#typing-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#text-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 80vw;
+    height: 60vh;
+    background: linear-gradient(
+        to bottom right,
+        rgba(48, 48, 48, 0.508),
+        rgba(28, 31, 35, 0.508),
+        rgba(14, 16, 20, 0.81),
+        rgba(12, 15, 21, 0.67)
+    );
+
+    border: solid rgb(55, 55, 55) 1px;
+    border-radius: 1rem;
+
+    padding: 0 2%;
+}
+
+#typing-content {
+    color: rgba(179, 178, 178, 0.465);
+    font-family: "Fira", monospace;
+    font-size: 5vh;
+    text-align: justify;
+}
