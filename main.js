@@ -4,14 +4,19 @@ const textBox       = document.getElementById("text-box");
 const hiddenInput   = document.getElementById("hidden-input");
 const typingContent = document.getElementById("typing-content");
 
-const maxLength   = 10;
+const maxLength   = 30;
 let displayedList = [];
 let typedList = [];
-let wordList = {"words": []}; 
+let wordList  = {"words": []}; 
 let currentWordIndex = 0;
+let charCounted = 0;
 
 const cursor = document.createElement("span");
 cursor.id = "cursor";
+
+countdownDisplay   = document.getElementById("timer")
+const totalSecond  = 30;
+let startCountdown = false;
 
 
 fetch("./english_1k.json")
@@ -23,8 +28,8 @@ fetch("./english_1k.json")
 
 
 function initTyping() {
-    displayedList = [];
-    currentWordIndex = 0;
+    displayedList     = [];
+    currentWordIndex  = 0;
     hiddenInput.value = "";
 
     while (displayedList.length < maxLength && wordList.words.length > 0) {
@@ -53,11 +58,11 @@ function mapTypingContent() {
 
 
 function updateCursor() {
-    const wordElements = typingContent.querySelectorAll(".word");
+    const wordElements  = typingContent.querySelectorAll(".word");
     const currentWordEl = wordElements[currentWordIndex];
 
     const chars = currentWordEl.querySelectorAll(".char");
-    const pos = hiddenInput.value.length;
+    const pos   = hiddenInput.value.length;
 
     const containerRect = typingContent.getBoundingClientRect();
     let targetRect;
@@ -84,11 +89,37 @@ function updateCursor() {
 }
 
 
+function finished() {
+    hiddenInput.disabled = true;
+    cursor.style.opacity = 0;
+    const WPM = Math.round(((charCounted/5)/(totalSecond/60)));
+    typingContent.textContent = `${WPM} WPM`
+}
+
+
+let remain = totalSecond;
+const countdown = setInterval(() => {
+    if (startCountdown) {
+        remain--;
+        countdownDisplay.textContent = `${remain}s`;
+    
+        if (remain <= 0) {
+            finished();
+            clearInterval(countdown);
+        }
+    }
+}, 1000);
+
+
 textBox.addEventListener("click", () => hiddenInput.focus());
 window.addEventListener("load", () => hiddenInput.focus());
 
+
 hiddenInput.addEventListener("input", () => {
     const typed = hiddenInput.value;
+    if (typed) {
+        startCountdown = true;
+    }
 
     // Danh sách các từ hiện tại trên văn bản gốc
     const wordElements = typingContent.querySelectorAll(".word");
@@ -110,10 +141,14 @@ hiddenInput.addEventListener("input", () => {
 
         chars.forEach((char, i) => {
             if (i >= typedTrimmed.length) {
-                char.style.color = "red";
+                char.style.color   = "red";
                 char.style.opacity = 0.5;
             }
         })
+
+        if (typedTrimmed === targeWord) {
+            charCounted += typedTrimmed.length + 1;
+        }
 
         currentWordIndex ++;    // tăng index để chuyển sang từ mói
         hiddenInput.value = ""; // reset input value
@@ -124,6 +159,7 @@ hiddenInput.addEventListener("input", () => {
         }
 
         updateCursor();
+        return;
     }
 
     // Trong khi đang gõ chữ
