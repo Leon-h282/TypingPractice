@@ -124,8 +124,6 @@ hiddenInput.addEventListener("input", () => {
         }
 
         updateCursor();
-
-        return;
     }
 
     // Trong khi đang gõ chữ
