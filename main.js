@@ -171,14 +171,19 @@ hiddenInput.addEventListener("input", () => {
         });
 
         // Highlight đúng sai
-        for (let i=0; i<typed.length; i++) {
-            if (i < targeWord.length) {
+        if (typed.length <= targeWord.length) {
+            for (let i=0; i<typed.length; i++) {
                 if (typed[i] === targeWord[i]) {
                     chars[i].style.color = "yellow"; // Đúng
                 } else {
                     chars[i].style.color = "red";    // Sai
                     chars[i].style.opacity = 0.5;
                 }
+            }
+        } else {
+            for (let i=0; i<typed.length; i++) {
+                chars[i].style.color = "red";
+                chars[i].style.opacity = 0.5;
             }
         }
     }
