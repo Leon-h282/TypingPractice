@@ -8,6 +8,7 @@ const maxLength   = 10;
 let displayedList = [];
 let typedList = [];
 let wordList = {"words": []}; 
+let currentWordIndex = 0;
 
 
 fetch("./english_1k.json")
@@ -20,6 +21,9 @@ fetch("./english_1k.json")
 
 function initTyping() {
     displayedList = [];
+    currentWordIndex = 0;
+    hiddenInput.value = "";
+
     while (displayedList.length < maxLength && wordList.words.length > 0) {
         getRandomWord();
     }
@@ -35,11 +39,11 @@ function getRandomWord() {
 
 
 function mapTypingContent() {
-    let text = displayedList.join(" ");
     if (wordList.words.length) {
-        typingContent.innerHTML = [...text]
-            .map(char => `<span class="char">${char}</span>`)
-            .join("");
+        typingContent.innerHTML = displayedList.map((word) => {
+            let chars = [...word].map(char => `<span class="char">${char}</span>`).join("");
+            return `<span class="word">${chars}</span>`;
+        }).join('<span class="space"> </span>');
     }
 }
 
@@ -49,23 +53,53 @@ window.addEventListener("load", () => hiddenInput.focus());
 
 hiddenInput.addEventListener("input", () => {
     const typed = hiddenInput.value;
-    const chars = textBox.querySelectorAll(".char");
 
-    typedList = typed.trim().split(" ");
-    console.log(typedList)
-    console.log(typedList.length)
+    // Danh sách các từ hiện tại trên văn bản gốc
+    const wordElements = typingContent.querySelectorAll(".word");
 
-    if (typedList.length >= maxLength && typed.endsWith(" ")) {
-        hiddenInput.value = "";
-        initTyping();
+    // Từ đang được gõ trên văn bản gốc (DOM)
+    const currentWordEl = wordElements[currentWordIndex];
+
+    // Từ mẫu tương ứng (String)
+    const targeWord = displayedList[currentWordIndex];
+
+    // Danh sách các ký tự trong từ đang gõ
+    const chars = currentWordEl.querySelectorAll(".char");
+
+    // Nhấn space -> chuyển sang từ tiếp theo, không thể gõ lại
+    if (typed.endsWith(" ")) {
+        const typedTrimmed = typed.trim();
+
+        chars.forEach((char, i) => {
+            if (i >= typedTrimmed.length) {char.style.color = "red"}
+        })
+
+        currentWordIndex ++;    // tăng index để chuyển sang từ mói
+        hiddenInput.value = ""; // reset input value
+
+        // Reset văn bản mới khi đã gõ đủ số từ
+        if (currentWordIndex >= maxLength) {
+            initTyping();
+        }
         return;
     }
 
-    chars.forEach((char, i) => {
-        if (i < typed.length) {
-            char.style.color = char.textContent === typed[i] ? "yellow" : "red";
-        } else {
-            char.style.color = "";
+    // Trong khi đang gõ chữ
+    if (currentWordIndex < maxLength) {
+        // Luôn luôn reset về màu gốc
+        chars.forEach(char => {
+            char.style.color = "rgba(179, 178, 178, 0.465)";
+        });
+
+        // Highlight đúng sai
+        for (let i=0; i<typed.length; i++) {
+            if (i < targeWord.length) {
+                if (typed[i] === targeWord[i]) {
+                    chars[i].style.color = "yellow"; // Đúng
+                } else {
+                    chars[i].style.color = "red";    // Sai
+                }
+            }
         }
-    });
+    }
 });
