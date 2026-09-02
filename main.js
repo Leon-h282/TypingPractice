@@ -10,6 +10,9 @@ let typedList = [];
 let wordList = {"words": []}; 
 let currentWordIndex = 0;
 
+const cursor = document.createElement("span");
+cursor.id = "cursor";
+
 
 fetch("./english_1k.json")
     .then(res => res.json())
@@ -45,6 +48,39 @@ function mapTypingContent() {
             return `<span class="word">${chars}</span>`;
         }).join('<span class="space"> </span>');
     }
+    updateCursor();
+}
+
+
+function updateCursor() {
+    const wordElements = typingContent.querySelectorAll(".word");
+    const currentWordEl = wordElements[currentWordIndex];
+
+    const chars = currentWordEl.querySelectorAll(".char");
+    const pos = hiddenInput.value.length;
+
+    const containerRect = typingContent.getBoundingClientRect();
+    let targetRect;
+    let atEnd = false;
+
+    if (pos < chars.length) {
+        targetRect = chars[pos].getBoundingClientRect();
+    } else if (chars.length > 0) {
+        targetRect = chars[chars.length - 1].getBoundingClientRect();
+        atEnd = true;
+    } else {
+        targetRect = currentWordEl.getBoundingClientRect();
+    }
+
+    const left = atEnd ? targetRect.right : targetRect.left;
+
+    cursor.style.left   = `${left - containerRect.left}px`;
+    cursor.style.top    = `${targetRect.top - containerRect.top}px`;
+    cursor.style.height = `${targetRect.height}px`;
+
+    if (cursor.parentElement !== typingContent) {
+        typingContent.appendChild(cursor);
+    }
 }
 
 
@@ -66,12 +102,17 @@ hiddenInput.addEventListener("input", () => {
     // Danh sách các ký tự trong từ đang gõ
     const chars = currentWordEl.querySelectorAll(".char");
 
+    updateCursor();
+
     // Nhấn space -> chuyển sang từ tiếp theo, không thể gõ lại
     if (typed.endsWith(" ")) {
         const typedTrimmed = typed.trim();
 
         chars.forEach((char, i) => {
-            if (i >= typedTrimmed.length) {char.style.color = "red"}
+            if (i >= typedTrimmed.length) {
+                char.style.color = "red";
+                char.style.opacity = 0.5;
+            }
         })
 
         currentWordIndex ++;    // tăng index để chuyển sang từ mói
@@ -81,6 +122,9 @@ hiddenInput.addEventListener("input", () => {
         if (currentWordIndex >= maxLength) {
             initTyping();
         }
+
+        updateCursor();
+
         return;
     }
 
@@ -89,6 +133,7 @@ hiddenInput.addEventListener("input", () => {
         // Luôn luôn reset về màu gốc
         chars.forEach(char => {
             char.style.color = "rgba(179, 178, 178, 0.465)";
+            char.style.opacity = 1;
         });
 
         // Highlight đúng sai
@@ -98,6 +143,7 @@ hiddenInput.addEventListener("input", () => {
                     chars[i].style.color = "yellow"; // Đúng
                 } else {
                     chars[i].style.color = "red";    // Sai
+                    chars[i].style.opacity = 0.5;
                 }
             }
         }
