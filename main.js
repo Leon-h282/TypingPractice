@@ -43,7 +43,7 @@ function initTyping() {
     currentWordIndex  = 0;
     hiddenInput.value = "";
     hiddenInput.disabled = false;
-    typingContent.style.fontSize = "500%";
+    typingContent.style.fontSize = "3.5cqw";
 
     while (displayedList.length < maxLength && wordList.words.length > 0) {
         getRandomWord();
@@ -107,7 +107,7 @@ function finished() {
     cursor.style.opacity = 0;
     const WPM = Math.round(((charCounted/5)/(totalSecond/60)));
     typingContent.textContent = `${WPM} WPM`;
-    typingContent.style.fontSize = "1500%";
+    typingContent.style.fontSize = "10cqw";
     
     countdownDisplay.textContent = `${remain}s`;
 

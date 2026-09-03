@@ -38,7 +38,7 @@ body {
     justify-content: center;
     align-items: center;
 
-    gap: 1%;
+    gap: 5%;
     position: absolute;
 }
 
@@ -60,7 +60,7 @@ body {
 #typing-container #timer #select-time {
     color: rgb(143, 142, 142);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 200%;
+    font-size: 2cqw;
 
     background-color: #080a16;
     border-radius: 0.3em;
@@ -71,7 +71,7 @@ body {
 #typing-container #timer #countdown {
     color: rgb(143, 142, 142);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 250%;
+    font-size: 2.5cqw
 }
 
 
@@ -80,7 +80,7 @@ body {
     justify-content: center;
     align-items: center;
     
-    width : 80% ;
+    width : 80%;
     height: 50%;
     background: linear-gradient(
         to bottom right,
@@ -100,7 +100,7 @@ body {
 #typing-content {
     color      : rgba(179, 178, 178, 0.465);
     font-family: "Fira", monospace;
-    font-size  : 500%;
+    font-size  : 3.5cqw;
     text-align : justify;
     position   : relative;
 }
