@@ -24,7 +24,7 @@ body {
     color: white;
     font-family: "Fira", monospace;
 
-    margin-top: 1vh;
+    margin-top: 20px;
     text-align: center;
 }
 
@@ -41,28 +41,29 @@ body {
 
 
 #timer {
+    height: 70px;
     display: flex;
     flex-direction: row;
 
     margin-right: auto;
     align-items: center;
-    gap: 10%;
+    gap: 15px;
 }
 
 
 #countdown {
     color: rgb(143, 142, 142);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 200%;
+    font-size: 40px;
 }
 
 
 #select-time {
     color: rgb(143, 142, 142);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 150%;
+    font-size: 30px;
 
-    height: 50%;
+    height: 40px;
     background-color: #080a16;
     border-radius: 0.3em;
 }
@@ -73,8 +74,8 @@ body {
     justify-content: center;
     align-items: center;
     
-    width: 80vw;
-    height: 60vh;
+    width: 1600px;
+    height: 500px;
     background: linear-gradient(
         to bottom right,
         rgba(48, 48, 48, 0.508),
@@ -82,9 +83,10 @@ body {
         rgba(14, 16, 20, 0.81),
         rgba(12, 15, 21, 0.67)
     );
+    box-shadow: 0 25px 40px 20px hsla(0, 0%, 0%, 0.576);
 
     border: solid rgb(55, 55, 55) 1px;
-    border-radius: 1rem;
+    border-radius: 2em;
 
     padding: 0 2%;
 }
@@ -92,7 +94,7 @@ body {
 #typing-content {
     color:     rgba(179, 178, 178, 0.465);
     font-family: "Fira", monospace;
-    font-size  : 200%;
+    font-size  : 60px;
     text-align : justify;
     position   : relative;
 }

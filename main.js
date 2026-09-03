@@ -43,6 +43,7 @@ function initTyping() {
     currentWordIndex  = 0;
     hiddenInput.value = "";
     hiddenInput.disabled = false;
+    typingContent.style.fontSize = "60px";
 
     while (displayedList.length < maxLength && wordList.words.length > 0) {
         getRandomWord();
@@ -106,6 +107,7 @@ function finished() {
     cursor.style.opacity = 0;
     const WPM = Math.round(((charCounted/5)/(totalSecond/60)));
     typingContent.textContent = `${WPM} WPM`
+    typingContent.style.fontSize = "300px";
 
     remain = totalSecond;
     startCountdown = false;
