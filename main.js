@@ -45,6 +45,9 @@ function initTyping() {
     hiddenInput.disabled = false;
     typingContent.style.fontSize = "3.5cqw";
 
+    cursor.style.opacity = 1;
+    cursor.style.animation = "blink 1s infinite";
+
     while (displayedList.length < maxLength && wordList.words.length > 0) {
         getRandomWord();
     }
@@ -152,9 +155,10 @@ window.addEventListener("load", () => hiddenInput.focus());
 
 hiddenInput.addEventListener("input", () => {
     const typed = hiddenInput.value;
-    if (typed && ! startCountdown) {
+    if (typed && !startCountdown) {
         startCountdown = true;
         startTimer();
+        cursor.style.animation = "none";
     }
 
     // Danh sách các từ hiện tại trên văn bản gốc
