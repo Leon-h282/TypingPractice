@@ -44,17 +44,6 @@ function initTyping() {
     hiddenInput.value = "";
     hiddenInput.disabled = false;
 
-    remain = totalSecond;
-    startCountdown = false;
-    charCounted = 0;
-
-    countdownDisplay.textContent = `${remain}s`;
-
-    if (countdownTimer) {
-        clearInterval(countdownTimer);
-        countdownTimer = null;
-    }
-
     while (displayedList.length < maxLength && wordList.words.length > 0) {
         getRandomWord();
     }
@@ -117,6 +106,17 @@ function finished() {
     cursor.style.opacity = 0;
     const WPM = Math.round(((charCounted/5)/(totalSecond/60)));
     typingContent.textContent = `${WPM} WPM`
+
+    remain = totalSecond;
+    startCountdown = false;
+    charCounted = 0;
+
+    countdownDisplay.textContent = `${remain}s`;
+
+    if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+    }
 }
 
 
