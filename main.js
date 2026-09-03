@@ -48,9 +48,6 @@ function initTyping() {
     hiddenInput.disabled = false;
     typingContent.style.fontSize = "3.5cqw";
 
-    resetTimer();
-    countdownDisplay.textContent = `${remain}s`;
-
     cursor.style.opacity   = 1;
     cursor.style.animation = "blink 1s infinite";
 
@@ -159,6 +156,8 @@ function startTimer() {
 textBox.addEventListener("click", () => {
     countdownDisplay.textContent = `${remain}s`;
     initTyping();
+    resetTimer();
+    countdownDisplay.textContent = `${remain}s`;
     hiddenInput.focus();
 });
 window.addEventListener("load", () => hiddenInput.focus());
