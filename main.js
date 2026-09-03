@@ -14,11 +14,20 @@ let charCounted = 0;
 const cursor = document.createElement("span");
 cursor.id = "cursor";
 
-countdownDisplay   = document.getElementById("timer")
-const totalSecond  = 10;
+countdownDisplay   = document.getElementById("countdown")
+let timeSelection  = document.getElementById("select-time");
+let totalSecond    = Number(timeSelection.value);
 let startCountdown = false;
 let remain = totalSecond;
 let countdownTimer = null;
+
+
+timeSelection.addEventListener("change", () => {
+    totalSecond = Number(timeSelection.value);
+    remain = totalSecond;
+
+    countdownDisplay.textContent = `${remain}s`;
+});
 
 
 fetch("./english_1k.json")

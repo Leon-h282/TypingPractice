@@ -41,13 +41,29 @@ body {
 
 
 #timer {
+    display: flex;
+    flex-direction: row;
+
+    margin-right: auto;
+    align-items: center;
+    gap: 10%;
+}
+
+
+#countdown {
     color: rgb(143, 142, 142);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 200%;
+}
 
-    margin-right: auto;
-    margin-top: 0;
-    margin-bottom: 0;
+
+#select-time {
+    color: rgb(143, 142, 142);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 150%;
+
+    height: 50%;
+    background-color: #080a16;
 }
 
 
