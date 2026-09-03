@@ -27,6 +27,8 @@ timeSelection.addEventListener("change", () => {
     remain = totalSecond;
 
     countdownDisplay.textContent = `${remain}s`;
+    resetTimer();
+    initTyping();
 });
 
 
@@ -42,10 +44,14 @@ function initTyping() {
     displayedList     = [];
     currentWordIndex  = 0;
     hiddenInput.value = "";
+
     hiddenInput.disabled = false;
     typingContent.style.fontSize = "3.5cqw";
 
-    cursor.style.opacity = 1;
+    resetTimer();
+    countdownDisplay.textContent = `${remain}s`;
+
+    cursor.style.opacity   = 1;
     cursor.style.animation = "blink 1s infinite";
 
     while (displayedList.length < maxLength && wordList.words.length > 0) {
@@ -53,6 +59,13 @@ function initTyping() {
     }
     mapTypingContent();
 }
+
+
+function resetTimer() {
+    startCountdown = false;
+    remain = totalSecond;
+};
+
 
 function getRandomWord() {
     word = wordList.words[
@@ -113,9 +126,7 @@ function finished() {
     typingContent.style.fontSize = "10cqw";
     
     countdownDisplay.textContent = `${remain}s`;
-
-    remain = totalSecond;
-    startCountdown = false;
+    resetTimer();
     charCounted = 0;
 
     if (countdownTimer) {
