@@ -43,7 +43,7 @@ function initTyping() {
     currentWordIndex  = 0;
     hiddenInput.value = "";
     hiddenInput.disabled = false;
-    typingContent.style.fontSize = "60px";
+    typingContent.style.fontSize = "500%";
 
     while (displayedList.length < maxLength && wordList.words.length > 0) {
         getRandomWord();
@@ -106,14 +106,14 @@ function finished() {
     hiddenInput.disabled = true;
     cursor.style.opacity = 0;
     const WPM = Math.round(((charCounted/5)/(totalSecond/60)));
-    typingContent.textContent = `${WPM} WPM`
-    typingContent.style.fontSize = "300px";
+    typingContent.textContent = `${WPM} WPM`;
+    typingContent.style.fontSize = "1500%";
+    
+    countdownDisplay.textContent = `${remain}s`;
 
     remain = totalSecond;
     startCountdown = false;
     charCounted = 0;
-
-    countdownDisplay.textContent = `${remain}s`;
 
     if (countdownTimer) {
         clearInterval(countdownTimer);
@@ -143,6 +143,7 @@ function startTimer() {
 
 
 textBox.addEventListener("click", () => {
+    countdownDisplay.textContent = `${remain}s`;
     initTyping();
     hiddenInput.focus();
 });

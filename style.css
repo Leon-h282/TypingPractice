@@ -24,48 +24,54 @@ body {
     color: white;
     font-family: "Fira", monospace;
 
-    margin-top: 20px;
+    margin-top: 1%;
     text-align: center;
 }
 
 
 #typing-container {
-    min-height: 100vh;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 
     justify-content: center;
     align-items: center;
+
+    gap: 1%;
     position: absolute;
 }
 
 
-#timer {
-    height: 70px;
+#typing-container #timer {
+    height: 4%;
+    width: 100%;
+
     display: flex;
     flex-direction: row;
-
-    margin-right: auto;
     align-items: center;
-    gap: 15px;
+
+    gap: 1%;
+    padding: 0;
+    margin-left: 20%;
 }
 
 
-#countdown {
+#typing-container #timer #select-time {
     color: rgb(143, 142, 142);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 40px;
-}
+    font-size: 200%;
 
-
-#select-time {
-    color: rgb(143, 142, 142);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
-
-    height: 40px;
     background-color: #080a16;
     border-radius: 0.3em;
+    margin: 0;
+}
+
+
+#typing-container #timer #countdown {
+    color: rgb(143, 142, 142);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 250%;
 }
 
 
@@ -74,8 +80,8 @@ body {
     justify-content: center;
     align-items: center;
     
-    width: 1600px;
-    height: 500px;
+    width : 80% ;
+    height: 50%;
     background: linear-gradient(
         to bottom right,
         rgba(48, 48, 48, 0.508),
@@ -92,9 +98,9 @@ body {
 }
 
 #typing-content {
-    color:     rgba(179, 178, 178, 0.465);
+    color      : rgba(179, 178, 178, 0.465);
     font-family: "Fira", monospace;
-    font-size  : 60px;
+    font-size  : 500%;
     text-align : justify;
     position   : relative;
 }
@@ -103,9 +109,8 @@ body {
     position: absolute;
     width: 0.1em;                /* Độ dày của con trỏ */
     background-color: rgb(255, 249, 186);   /* Dùng màu nền thay vì màu chữ */
-    margin-left: -0.1em;         /* Dịch nhẹ 1px để con trỏ chui lọt vào khe giữa 2 ký tự */
+    margin-left: -0.1em;         /* Dịch nhẹ để con trỏ nằm giữa 2 ký tự */
     
-    /* (Tùy chọn) Thêm hiệu ứng lướt mượt mà khi gõ */
     transition: left 0.05s ease-out, top 0.05s ease-out;
     animation: blink 1s infinite;
 }
