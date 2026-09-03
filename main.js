@@ -15,8 +15,10 @@ const cursor = document.createElement("span");
 cursor.id = "cursor";
 
 countdownDisplay   = document.getElementById("timer")
-const totalSecond  = 30;
+const totalSecond  = 10;
 let startCountdown = false;
+let remain = totalSecond;
+let countdownTimer = null;
 
 
 fetch("./english_1k.json")
@@ -31,6 +33,18 @@ function initTyping() {
     displayedList     = [];
     currentWordIndex  = 0;
     hiddenInput.value = "";
+    hiddenInput.disabled = false;
+
+    remain = totalSecond;
+    startCountdown = false;
+    charCounted = 0;
+
+    countdownDisplay.textContent = `${remain}s`;
+
+    if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+    }
 
     while (displayedList.length < maxLength && wordList.words.length > 0) {
         getRandomWord();
@@ -97,28 +111,38 @@ function finished() {
 }
 
 
-let remain = totalSecond;
-const countdown = setInterval(() => {
-    if (startCountdown) {
-        remain--;
-        countdownDisplay.textContent = `${remain}s`;
+function startTimer() {
+    if (countdownTimer) return;
+
+    remain --;
+    countdownDisplay.textContent = `${remain}s`;
     
-        if (remain <= 0) {
-            finished();
-            clearInterval(countdown);
+    countdownTimer = setInterval(() => {
+        if (startCountdown) {
+            remain--;
+            countdownDisplay.textContent = `${remain}s`;
+        
+            if (remain <= 0) {
+                finished();
+                clearInterval(countdownTimer);
+            }
         }
-    }
-}, 1000);
+    }, 1000);
+}
 
 
-textBox.addEventListener("click", () => hiddenInput.focus());
+textBox.addEventListener("click", () => {
+    initTyping();
+    hiddenInput.focus();
+});
 window.addEventListener("load", () => hiddenInput.focus());
 
 
 hiddenInput.addEventListener("input", () => {
     const typed = hiddenInput.value;
-    if (typed) {
+    if (typed && ! startCountdown) {
         startCountdown = true;
+        startTimer();
     }
 
     // Danh sách các từ hiện tại trên văn bản gốc
