@@ -21,9 +21,8 @@ let startCountdown = false;
 let remain = totalSecond;
 let countdownTimer = null;
 
-
 let errorBox = document.getElementById("error-box")
-
+const errorMaxLen = 10;
 
 timeSelection.addEventListener("change", () => {
     totalSecond = Number(timeSelection.value);
@@ -53,6 +52,8 @@ function initTyping() {
 
     cursor.style.opacity   = 1;
     cursor.style.animation = "blink 1s infinite";
+
+    errorBox.textContent = "";
 
     while (displayedList.length < maxLength && wordList.words.length > 0) {
         getRandomWord();
@@ -128,6 +129,8 @@ function finished() {
     countdownDisplay.textContent = `${remain}s`;
     resetTimer();
     charCounted = 0;
+
+    errorBox.textContent = "";
 
     if (countdownTimer) {
         clearInterval(countdownTimer);
@@ -224,20 +227,19 @@ hiddenInput.addEventListener("input", () => {
         });
 
         // Highlight đúng sai
-        if (typed.length <= targeWord.length) {
-            for (let i=0; i<typed.length; i++) {
-                if (typed[i] === targeWord[i]) {
-                    chars[i].style.color = "yellow"; // Đúng
-                } else {
-                    chars[i].style.color = "red";    // Sai
-                    chars[i].style.opacity = 0.5;
-                }
-            }
-        } else {
-            for (let i=0; i<typed.length; i++) {
-                chars[i].style.color = "red";
+        for (let i=0; i < typed.length && i < targeWord.length; i++) {
+            if (typed[i] === targeWord[i]) {
+                chars[i].style.color = "yellow"; // Đúng
+            } else {
+                chars[i].style.color = "red";    // Sai
                 chars[i].style.opacity = 0.5;
             }
+        }
+
+        if (typed.length > targeWord.length) {
+            errorBox.textContent = typed.substring(
+                Math.max(targeWord.length, typed.length - errorMaxLen),
+                typed.length);
         }
     }
 });
