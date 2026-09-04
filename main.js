@@ -22,6 +22,9 @@ let remain = totalSecond;
 let countdownTimer = null;
 
 
+let errorBox = document.getElementById("error-box")
+
+
 timeSelection.addEventListener("change", () => {
     totalSecond = Number(timeSelection.value);
     remain = totalSecond;
