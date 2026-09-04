@@ -11,3 +11,5 @@
 `english_1k.json` from `Monkeytype`:
 https://github.com/monkeytypegame/monkeytype/blob/master/frontend/static/languages/english_1k.json
 
+## GitHub page
+https://leon-h282.github.io/TypingPractice/
