@@ -97,7 +97,8 @@ body {
     align-items: center;
     
     width : 80%;
-    height: 50%;
+    min-height: 50%;
+    height: fit-content;
     background: linear-gradient(
         to bottom right,
         rgba(48, 48, 48, 0.508),
@@ -111,6 +112,10 @@ body {
     border-radius: 2em;
 
     padding: 0 2%;
+}
+
+#text-box:hover {
+    cursor: pointer;
 }
 
 #typing-content {
@@ -127,7 +132,7 @@ body {
     background-color: rgb(255, 249, 186);   /* Dùng màu nền thay vì màu chữ */
     margin-left: -0.1em;         /* Dịch nhẹ để con trỏ nằm giữa 2 ký tự */
     
-    transition: left 0.05s ease-out, top 0.05s ease-out;
+    transition: left 0.1s ease-out, top 0.05s ease-out;
     animation: blink 1s infinite;
 }
 
