@@ -240,6 +240,6 @@ hiddenInput.addEventListener("input", () => {
             errorBox.textContent = typed.substring(
                 Math.max(targeWord.length, typed.length - errorMaxLen),
                 typed.length);
-        }
+        } else {errorBox.textContent = "";}
     }
 });
