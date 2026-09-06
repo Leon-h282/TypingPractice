@@ -21,7 +21,6 @@ let startCountdown = false;
 let remain = totalSecond;
 let countdownTimer = null;
 
-let errorBox = document.getElementById("error-box")
 const errorMaxLen = 10;
 
 timeSelection.addEventListener("change", () => {
@@ -52,8 +51,6 @@ function initTyping() {
 
     cursor.style.opacity   = 1;
     cursor.style.animation = "blink 1s infinite";
-
-    errorBox.textContent = "";
 
     while (displayedList.length < maxLength && wordList.words.length > 0) {
         getRandomWord();
@@ -93,6 +90,7 @@ function updateCursor() {
 
     const chars = currentWordEl.querySelectorAll(".char");
     const pos   = hiddenInput.value.length;
+    const extraSpan = currentWordEl.querySelector(".extra");
 
     const containerRect = typingContent.getBoundingClientRect();
     let targetRect;
@@ -100,6 +98,10 @@ function updateCursor() {
 
     if (pos < chars.length) {
         targetRect = chars[pos].getBoundingClientRect();
+    } else if (extraSpan && extraSpan.textContent.length > 0) {
+        // đang gõ thừa -> đặt cursor sau đoạn extra
+        targetRect = extraSpan.getBoundingClientRect();
+        atEnd = true;
     } else if (chars.length > 0) {
         targetRect = chars[chars.length - 1].getBoundingClientRect();
         atEnd = true;
@@ -129,8 +131,6 @@ function finished() {
     countdownDisplay.textContent = `${remain}s`;
     resetTimer();
     charCounted = 0;
-
-    errorBox.textContent = "";
 
     if (countdownTimer) {
         clearInterval(countdownTimer);
@@ -170,12 +170,7 @@ window.addEventListener("load", () => hiddenInput.focus());
 
 
 hiddenInput.addEventListener("input", () => {
-    const typed = hiddenInput.value;
-    if (typed && !startCountdown) {
-        startCountdown = true;
-        startTimer();
-        cursor.style.animation = "none";
-    }
+    let typed = hiddenInput.value;
 
     // Danh sách các từ hiện tại trên văn bản gốc
     const wordElements = typingContent.querySelectorAll(".word");
@@ -189,7 +184,30 @@ hiddenInput.addEventListener("input", () => {
     // Danh sách các ký tự trong từ đang gõ
     const chars = currentWordEl.querySelectorAll(".char");
 
-    updateCursor();
+    // Chặn gõ thêm nếu đã vượt quá giới hạn ký tự thừa cho phép
+    // (không chặn dấu space kết thúc từ, để vẫn có thể chuyển từ)
+    const maxAllowedLen = targeWord.length + errorMaxLen;
+    if (!typed.endsWith(" ") && typed.length > maxAllowedLen) {
+        typed = typed.slice(0, maxAllowedLen);
+        hiddenInput.value = typed;
+    }
+
+    // Tạo span cho chuỗi ký tự bị gõ thừa
+    let extraSpan = currentWordEl.querySelector(".extra");
+    if (!extraSpan) {
+        extraSpan = document.createElement("span");
+        extraSpan.className = "extra";
+        extraSpan.style.color = "red";
+        extraSpan.style.opacity = 0.5;
+        currentWordEl.appendChild(extraSpan);
+    }
+
+    // Bắt đầu đếm ngược thời gian đánh máy
+    if (typed && !startCountdown) {
+        startCountdown = true;
+        startTimer();
+        cursor.style.animation = "none";
+    }
 
     // Nhấn space -> chuyển sang từ tiếp theo, không thể gõ lại
     if (typed.endsWith(" ")) {
@@ -227,19 +245,28 @@ hiddenInput.addEventListener("input", () => {
         });
 
         // Highlight đúng sai
-        for (let i=0; i < typed.length && i < targeWord.length; i++) {
-            if (typed[i] === targeWord[i]) {
-                chars[i].style.color = "yellow"; // Đúng
-            } else {
-                chars[i].style.color = "red";    // Sai
-                chars[i].style.opacity = 0.5;
+        for (let i=0; i < Math.min(typed.length, targeWord.length); i++) {
+            if (i < targeWord.length) {
+                if (typed[i] === targeWord[i]) {
+                    chars[i].style.color = "yellow"; // Đúng
+                } else {
+                    chars[i].style.color = "red";    // Sai
+                    chars[i].style.opacity = 0.5;
+                }
             }
         }
 
         if (typed.length > targeWord.length) {
-            errorBox.textContent = typed.substring(
-                Math.max(targeWord.length, typed.length - errorMaxLen),
-                typed.length);
-        } else {errorBox.textContent = "";}
+            const extra = typed.substring(
+                targeWord.length,
+                Math.min(typed.length, targeWord.length + errorMaxLen)
+            );
+
+            extraSpan.textContent = extra;
+        } else {
+            extraSpan.textContent = "";
+        }
     }
+
+    updateCursor();
 });
