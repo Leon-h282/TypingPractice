@@ -3,9 +3,7 @@
 <h1 align=center>TYPING PRACTICE</h1>
 
 ## Description
-- Typing practice website
-- Timer setting options: `10s`, `30s`, `60s`
-- Calculate WPM
+This is a typing practice site where user practice typing within a selected time limit. There are 3 time limit options: `10s`, `30s`, and `60s`. Typing errors will be displayed redish. When time is up, user will see their typing speed, `WPS`, on the screen.
 
 <img width="1280" height="720" alt="TypingPractice" src="https://github.com/user-attachments/assets/36992ab9-1782-45d8-a527-1c0e80f402a4" />
 
