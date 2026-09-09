@@ -9,7 +9,7 @@ This is a typing practice site where user practice typing within a selected time
 
 ## Pipeline
 - Get random words from `english_1k.json`.
-- Start timer when user start typing/
+- Start timer when user start typing.
 - **Compare** with hidden input content.
 - Highlight **typed** words and **errors**.
 - Show `WPM` result.
