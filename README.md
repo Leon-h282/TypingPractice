@@ -1,6 +1,6 @@
 
 
-<h1 align=center>TYPING PRACTICE</h1>
+# [JAVASCRIPT] TYPING PRACTICE
 
 ## Description
 This is a typing practice site where user practice typing within a selected time limit. There are 3 time limit options: `10s`, `30s`, and `60s`. Typing errors will be displayed redish. When time is up, user will see their typing speed, `WPS`, on the screen.
