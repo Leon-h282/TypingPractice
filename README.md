@@ -17,7 +17,7 @@ This is a typing practice site where user practice typing within a selected time
 ## Languages used
 - Javascript
 - HTML
-- CSSs
+- CSS
 
 ## Words source
 `english_1k.json` from `Monkeytype`:
