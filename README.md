@@ -14,6 +14,8 @@ This is a typing practice site where user practice typing within a selected time
 - Highlight **typed** words and **errors**.
 - Show `WPM` result.
 
+## Programming languages
+- Javascript
 
 ## Words source
 `english_1k.json` from `Monkeytype`:
